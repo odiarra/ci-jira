@@ -1,6 +1,10 @@
- node('Jenkins-ci-Jira') {
+pipeline {
+    
+    agent {
+        dockerfile true 
+    }
 
-    def app
+    def exj
 
     stage('Clone repository'){
          /*Pour clone le referentiel sur notre repertoire de travail*/
@@ -8,13 +12,12 @@
     }
     stage('Build image') {
         
-
-        app = docker.build("getintodevops/hellonode")
+        exj = docker.build("odiarra/ci-jira")
     }
 
     stage('Test image') {
          
-        app.inside {
+        exj.inside {
             sh 'echo "Tests passed"'
         }
     }
